@@ -33,12 +33,8 @@ function place(location, mark) {
 
 function rowCheck(row) {
     if (row[0] === null || row[1] === null || row[2] === null) {
-        // return false;
-        // console.log("nope");
         return false;
     }
-    // else return rowChecker(row);
-    // console.log(rowChecker(row));
     if (row[0] != row[1]) {
         return false;
     }
@@ -64,38 +60,26 @@ function columnCheck(grid, index) {
 }
 
 // leftToRight is a boolean to check if you are going diagonal from left to right or right to left
-function diagonalCheck(grid, leftToRight) {
-    // if ((grid[0])[0] === null || (grid[1])[1] === null || (grid[2])[2] === null || (grid[0])[2] === null || (grid[2])[0] === null) {
-    //     return false;
-    // }
-    // condition for if we are checking from left to right
-    if (leftToRight == true) {
-        if ((grid[0])[0] === null || (grid[1])[1] === null || (grid[2])[2] === null) {
-            return false;
-        }
-        if ((grid[0])[0] != (grid[1])[1]) {
-            return false;
-        }
-        else if ((grid[1])[1] != (grid[2])[2]) {
-            return false;
-        }
-        else return true;
+function diagonalCheck(grid) {
+    if ((grid[1])[1] === null || ((grid[0])[0] === null && (grid[0])[2] === null) || ((grid[2])[0] === null && (grid[2])[2] === null)) {
+        return false;
     }
-    // condition for if we are checking from right to left
-    else {
-        if ((grid[0])[2] === null || (grid[1])[1] === null || (grid[2])[0] === null) {
-            return false;
-        }
-        if ((grid[0])[2] != (grid[1])[1]) {
-            return false;
-        }
-        else if ((grid[1])[1] != (grid[2])[0]) {
-            return false;
-        }
-        else return true;
+    if (((grid[0])[0] === null && (grid[2])[0] === null) || ((grid[0])[2] === null && (grid[2])[2] === null)) {
+        return false;
     }
-
-
+    if(((grid[1])[1] != (grid[0])[0]) && ((grid[1])[1] != (grid[0])[2])) {
+        return false;
+    }
+    if (((grid[1])[1] != (grid[2])[0]) && ((grid[1])[1] != (grid[2])[2])) {
+        return false;
+    }
+    if (((grid[1])[1] != (grid[0])[0]) && ((grid[1])[1] != (grid[2])[0])) {
+        return false;
+    }
+    if (((grid[1])[1] != (grid[0])[2]) && ((grid[1])[1] != (grid[2])[2])) {
+        return false;
+    }
+    else return true;
 
 }
 
