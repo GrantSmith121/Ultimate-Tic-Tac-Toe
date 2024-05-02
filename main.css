@@ -1,0 +1,12 @@
+body {
+    --bg-color: #65b7c9;
+    --line-color: #0a72f2;
+    
+}
+
+.x-lines {
+    width: 100%;
+    height: 1em;
+    border-radius: 20;
+    background-color: black;
+}
