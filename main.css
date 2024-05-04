@@ -10,3 +10,20 @@ body {
     border-radius: 20;
     background-color: black;
 }
+
+.space {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    width: 150px;
+    height: 150px;
+    padding: 2em;
+    margin: 2em;
+    color: white;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
