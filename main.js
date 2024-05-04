@@ -1,4 +1,9 @@
-let spaces = [[null, null, null], [null, null, null], [null, null, null]];
+const board = {
+    spaces: [[null, null, null], [null, null, null], [null, null, null]],
+    turn: "player1"
+}
+
+let spacesBaseCase = [[null, null, null], [null, null, null], [null, null, null]];
 let testSpaces = [["X", "X", "X"], [null, null, null], [null, null, null]];
 let testSpaces1 = [["X", null, null], ["X", null, null], ["O", null, null]];
 let testSpaces2 = [["X", null, null], [null, "X", null], [null, null, "X"]];
