@@ -23,6 +23,11 @@ body {
     color: white;
 }
 
+.space:hover {
+    background-color: green;
+    cursor: pointer;
+}
+
 .row {
     display: flex;
     justify-content: center;
