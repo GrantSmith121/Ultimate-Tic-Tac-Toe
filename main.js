@@ -1,3 +1,14 @@
+const space00 = document.getElementById("0-0");
+const space01 = document.getElementById("0-1");
+const space02 = document.getElementById("0-2");
+const space10 = document.getElementById("1-0");
+const space11 = document.getElementById("1-1");
+const space12 = document.getElementById("1-2");
+const space20 = document.getElementById("2-0");
+const space21 = document.getElementById("2-1");
+const space22 = document.getElementById("2-2");
+
+
 const board = {
     spaces: [[null, null, null], [null, null, null], [null, null, null]],
     turn: "player1"
@@ -83,6 +94,12 @@ function diagonalCheck(grid) {
     else return true;
 
 }
+
+
+space00.addEventListener('click', function() {
+    place(board.spaces, [0, 0], "O");
+    space00.innerText = "O";
+});
 
 // function winCheck(spaces) {
 //     for(let i = 0; i <= 2; i++) {
