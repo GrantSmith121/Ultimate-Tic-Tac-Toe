@@ -8,6 +8,8 @@ const space20 = document.getElementById("2-0");
 const space21 = document.getElementById("2-1");
 const space22 = document.getElementById("2-2");
 
+// const anySpace = document.get
+
 
 const board = {
     spaces: [[null, null, null], [null, null, null], [null, null, null]],
@@ -39,7 +41,14 @@ function place(grid, location, mark) {
 
     row[columnNum] = mark;
     console.log(row[columnNum]);
+    console.log("space" + rowNum + columnNum);
+
 }
+
+space00.addEventListener('click', function() {
+    place(board.spaces, [0, 0], "O");
+    space00.innerText = "O";
+});
 
 
 
@@ -96,10 +105,7 @@ function diagonalCheck(grid) {
 }
 
 
-space00.addEventListener('click', function() {
-    place(board.spaces, [0, 0], "O");
-    space00.innerText = "O";
-});
+
 
 // function winCheck(spaces) {
 //     for(let i = 0; i <= 2; i++) {
