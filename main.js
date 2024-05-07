@@ -25,12 +25,13 @@ function place(grid, location, mark) {
     let rowNum = location[0];
     let columnNum = location[1];
 
-    let row = grid[rowNum];
+    let row = grid.spaces[rowNum];
 
     row[columnNum] = mark;
     console.log(row[columnNum]);
     console.log("space" + rowNum + columnNum);
 
+    winCheck(grid);
 }
 
 gridElement.addEventListener('click', function(event) {
@@ -39,7 +40,7 @@ gridElement.addEventListener('click', function(event) {
         if (space.innerText === "") {
             const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
             console.log(location);
-            place(board.spaces, location, "O");
+            place(board, location, "O");
             space.innerText = "O";
             // space.classList.remove("space:hover");
             console.log(space.classList);
