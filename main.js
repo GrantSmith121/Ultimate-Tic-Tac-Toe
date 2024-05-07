@@ -1,12 +1,14 @@
-const space00 = document.getElementById("0-0");
-const space01 = document.getElementById("0-1");
-const space02 = document.getElementById("0-2");
-const space10 = document.getElementById("1-0");
-const space11 = document.getElementById("1-1");
-const space12 = document.getElementById("1-2");
-const space20 = document.getElementById("2-0");
-const space21 = document.getElementById("2-1");
-const space22 = document.getElementById("2-2");
+// const space00 = document.getElementById("0-0");
+// const space01 = document.getElementById("0-1");
+// const space02 = document.getElementById("0-2");
+// const space10 = document.getElementById("1-0");
+// const space11 = document.getElementById("1-1");
+// const space12 = document.getElementById("1-2");
+// const space20 = document.getElementById("2-0");
+// const space21 = document.getElementById("2-1");
+// const space22 = document.getElementById("2-2");
+
+const gridElement = document.getElementById("grid");
 
 // const anySpace = document.get
 
@@ -45,10 +47,23 @@ function place(grid, location, mark) {
 
 }
 
-space00.addEventListener('click', function() {
-    place(board.spaces, [0, 0], "O");
-    space00.innerText = "O";
+gridElement.addEventListener('click', function(event) {
+    if (event.target.classList.contains('space')) {
+        console.log("Clicked on " + event.target.getAttribute('id'));
+
+        const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
+        console.log(location);
+        place(board.spaces, location, "O");
+        const space = document.getElementById(event.target.getAttribute('id'));
+        space.innerText = "O";
+    }
 });
+
+
+// space00.addEventListener('click', function() {
+//     place(board.spaces, [0, 0], "O");
+//     space00.innerText = "O";
+// });
 
 
 
