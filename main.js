@@ -2,7 +2,8 @@ const gridElement = document.getElementById("grid");
 
 const board = {
     spaces: [[null, null, null], [null, null, null], [null, null, null]],
-    turn: "player1"
+    turn: "player1",
+    winner: ""
 }
 
 let spacesBaseCase = [[null, null, null], [null, null, null], [null, null, null]];
@@ -34,19 +35,16 @@ function place(grid, location, mark) {
 
 gridElement.addEventListener('click', function(event) {
     if (event.target.classList.contains('space')) {
-        // console.log("Clicked on " + event.target.getAttribute('id'));
-        const space = document.getElementById(event.target.getAttribute('id'));
+         const space = document.getElementById(event.target.getAttribute('id'));
         if (space.innerText === "") {
             const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
             console.log(location);
             place(board.spaces, location, "O");
             space.innerText = "O";
+            // space.classList.remove("space:hover");
+            console.log(space.classList);
+            space.classList.toggle('hover-effect');
         }
-
-        
-        
-        // console.log("inner text: " + space.innerText);
-        // space.innerText = "O";
     }
 });
 
@@ -105,8 +103,25 @@ function diagonalCheck(grid) {
 
 
 
-// function winCheck(spaces) {
-//     for(let i = 0; i <= 2; i++) {
-//         if (spaces[i])
-//     };
-// }
+function winCheck(grid) {
+    for(let i = 0; i <= 2; i++) {
+        rowCheck(grid.spaces[i]);
+        if (rowCheck(grid.spaces[i])) {
+            grid.winner = "player1";
+            console.log("Player 1 wins!");
+            return;
+        }
+        columnCheck(grid.spaces, i);
+        if (columnCheck(grid.spaces, i)) {
+            grid.winner = "player1";
+            console.log("Player 1 wins!");
+            return;
+        }
+    };
+    diagonalCheck(grid.spaces);
+    if (diagonalCheck(grid.spaces)) {
+        grid.winner = "player1";
+        console.log("Player 1 wins!");
+        return;
+    };
+}
