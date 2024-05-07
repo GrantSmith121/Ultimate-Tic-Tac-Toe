@@ -1,17 +1,4 @@
-// const space00 = document.getElementById("0-0");
-// const space01 = document.getElementById("0-1");
-// const space02 = document.getElementById("0-2");
-// const space10 = document.getElementById("1-0");
-// const space11 = document.getElementById("1-1");
-// const space12 = document.getElementById("1-2");
-// const space20 = document.getElementById("2-0");
-// const space21 = document.getElementById("2-1");
-// const space22 = document.getElementById("2-2");
-
 const gridElement = document.getElementById("grid");
-
-// const anySpace = document.get
-
 
 const board = {
     spaces: [[null, null, null], [null, null, null], [null, null, null]],
@@ -26,8 +13,6 @@ let testSpaces3 = [[null, null, "X"], [null, "X", null], ["X", null, null]];
 
 // 0=continue 1=win 2=lose
 let winCondition = 0;
-
-let yourTurn;
 
 // location is an array
 // the first is row coordinate and the second value is column coordinate
@@ -49,23 +34,21 @@ function place(grid, location, mark) {
 
 gridElement.addEventListener('click', function(event) {
     if (event.target.classList.contains('space')) {
-        console.log("Clicked on " + event.target.getAttribute('id'));
-
-        const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
-        console.log(location);
-        place(board.spaces, location, "O");
+        // console.log("Clicked on " + event.target.getAttribute('id'));
         const space = document.getElementById(event.target.getAttribute('id'));
-        space.innerText = "O";
+        if (space.innerText === "") {
+            const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
+            console.log(location);
+            place(board.spaces, location, "O");
+            space.innerText = "O";
+        }
+
+        
+        
+        // console.log("inner text: " + space.innerText);
+        // space.innerText = "O";
     }
 });
-
-
-// space00.addEventListener('click', function() {
-//     place(board.spaces, [0, 0], "O");
-//     space00.innerText = "O";
-// });
-
-
 
 function rowCheck(row) {
     if (row[0] === null || row[1] === null || row[2] === null) {
