@@ -23,10 +23,6 @@ body {
     color: white;
 }
 
-.hover-effect {
-    /* Used to be able to toggle on and off hover effect */
-}
-
 .hover-effect:hover {
     background-color: green;
     cursor: pointer;

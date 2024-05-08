@@ -2,7 +2,7 @@ const gridElement = document.getElementById("grid");
 
 const board = {
     spaces: [[null, null, null], [null, null, null], [null, null, null]],
-    turn: "player1",
+    turn: 1,
     winner: ""
 }
 
@@ -31,7 +31,7 @@ function place(grid, location, mark) {
     console.log(row[columnNum]);
     console.log("space" + rowNum + columnNum);
 
-    winCheck(grid);
+    winCheck(grid, mark);
 }
 
 gridElement.addEventListener('click', function(event) {
@@ -104,25 +104,26 @@ function diagonalCheck(grid) {
 
 
 
-function winCheck(grid) {
+// player is either "X" or "O"
+function winCheck(grid, player) {
     for(let i = 0; i <= 2; i++) {
         rowCheck(grid.spaces[i]);
         if (rowCheck(grid.spaces[i])) {
-            grid.winner = "player1";
-            console.log("Player 1 wins!");
+            grid.winner = player;
+            // console.log("Player 1 wins!");
             return;
         }
         columnCheck(grid.spaces, i);
         if (columnCheck(grid.spaces, i)) {
-            grid.winner = "player1";
-            console.log("Player 1 wins!");
+            grid.winner = player;
+            // console.log("Player 1 wins!");
             return;
         }
     };
     diagonalCheck(grid.spaces);
     if (diagonalCheck(grid.spaces)) {
-        grid.winner = "player1";
-        console.log("Player 1 wins!");
+        grid.winner = player;
+        // console.log("Player 1 wins!");
         return;
     };
 }
