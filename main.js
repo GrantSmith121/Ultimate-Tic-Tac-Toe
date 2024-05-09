@@ -22,6 +22,11 @@ let winCondition = 0;
 // function to place either X or O in a specific space
 function place(grid, location, mark) {
 
+    if (grid.winner != "") {
+        console.log(mark + " wins!");
+        return;
+    }   
+
     let rowNum = location[0];
     let columnNum = location[1];
 
@@ -32,6 +37,8 @@ function place(grid, location, mark) {
     console.log("space" + rowNum + columnNum);
 
     winCheck(grid, mark);
+
+
 
     if (grid.turn === 1) {
         grid.turn = 2;
@@ -137,25 +144,18 @@ function winCheck(grid, player) {
 
 function aiPlay() {
     let location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)];
+    // the function found an empty space
     if (board.spaces[location[0]][location[1]] === null) {
         console.log("success");
         place(board, location, "X");
+        const space = document.getElementById("" + location[0].toString() + location[1].toString());
+        space.innerText = "X";
+        space.classList.toggle('hover-effect');
         return;
+    // the function found a space already filled
      } else { 
+        console.log("fail");
         location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)]; 
-        // aiPlay();
+        aiPlay();
     }
 }
-
-// while (board.turn == 2) {
-//     aiPlay();
-// }
-
-// while (board.turn == 2) {)
-//     let location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)];
-//      if (board.spaces[location[0]][location[1]] === null) {
-//         console.log("success");
-//         place(board, location, "X");
-//      } else { location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)]; }
-//      console.log("gooooo");
-// }
