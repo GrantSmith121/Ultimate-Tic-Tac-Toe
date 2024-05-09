@@ -146,11 +146,14 @@ function aiPlay() {
     let location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)];
     // the function found an empty space
     if (board.spaces[location[0]][location[1]] === null) {
-        console.log("success");
-        place(board, location, "X");
-        const space = document.getElementById("" + location[0].toString() + location[1].toString());
-        space.innerText = "X";
-        space.classList.toggle('hover-effect');
+        setTimeout(() => {  
+            console.log("success");
+            place(board, location, "X");
+            const space = document.getElementById("" + location[0].toString() + location[1].toString());
+            space.innerText = "X";
+            space.classList.toggle('hover-effect'); 
+        }, 1000);
+
         return;
     // the function found a space already filled
      } else { 
