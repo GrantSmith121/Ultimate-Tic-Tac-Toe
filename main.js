@@ -32,6 +32,13 @@ function place(grid, location, mark) {
     console.log("space" + rowNum + columnNum);
 
     winCheck(grid, mark);
+
+    if (grid.turn === 1) {
+        grid.turn = 2;
+        aiPlay();
+    } else { grid.turn = 1 }
+
+    
 }
 
 gridElement.addEventListener('click', function(event) {
@@ -127,3 +134,28 @@ function winCheck(grid, player) {
         return;
     };
 }
+
+function aiPlay() {
+    let location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)];
+    if (board.spaces[location[0]][location[1]] === null) {
+        console.log("success");
+        place(board, location, "X");
+        return;
+     } else { 
+        location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)]; 
+        // aiPlay();
+    }
+}
+
+// while (board.turn == 2) {
+//     aiPlay();
+// }
+
+// while (board.turn == 2) {)
+//     let location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)];
+//      if (board.spaces[location[0]][location[1]] === null) {
+//         console.log("success");
+//         place(board, location, "X");
+//      } else { location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)]; }
+//      console.log("gooooo");
+// }
