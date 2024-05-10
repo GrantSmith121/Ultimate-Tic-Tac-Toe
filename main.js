@@ -45,6 +45,7 @@ function place(grid, location, mark) {
         aiPlay();
     } else { grid.turn = 1 }
 
+    // return true;
     
 }
 
@@ -55,10 +56,16 @@ gridElement.addEventListener('click', function(event) {
             const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
             console.log(location);
             place(board, location, "O");
+            
             space.innerText = "O";
-            // space.classList.remove("space:hover");
+        // space.classList.remove("space:hover");
             console.log(space.classList);
             space.classList.toggle('hover-effect');
+        
+            // space.innerText = "O";
+            // // space.classList.remove("space:hover");
+            // console.log(space.classList);
+            // space.classList.toggle('hover-effect');
         }
     }
 });
@@ -143,6 +150,10 @@ function winCheck(grid, player) {
 }
 
 function aiPlay() {
+    if (board.winner != "") {
+        return;
+    }
+
     let location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)];
     // the function found an empty space
     if (board.spaces[location[0]][location[1]] === null) {
