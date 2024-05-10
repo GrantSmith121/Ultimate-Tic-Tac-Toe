@@ -46,7 +46,9 @@ function place(grid, location, mark) {
     } else { grid.turn = 1 }
 
     // return true;
-    
+    if (grid.winner != "") {
+        console.log(grid.winner + " wins!");
+    }
 }
 
 gridElement.addEventListener('click', function(event) {
