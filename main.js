@@ -48,7 +48,9 @@ function place(grid, location, mark) {
     // return true;
     if (grid.winner != "") {
         console.log(grid.winner + " wins!");
+        
     }
+    return true
 }
 
 gridElement.addEventListener('click', function(event) {
@@ -56,18 +58,9 @@ gridElement.addEventListener('click', function(event) {
          const space = document.getElementById(event.target.getAttribute('id'));
         if (space.innerText === "") {
             const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
-            console.log(location);
             place(board, location, "O");
-            
             space.innerText = "O";
-        // space.classList.remove("space:hover");
-            console.log(space.classList);
             space.classList.toggle('hover-effect');
-        
-            // space.innerText = "O";
-            // // space.classList.remove("space:hover");
-            // console.log(space.classList);
-            // space.classList.toggle('hover-effect');
         }
     }
 });
@@ -160,7 +153,6 @@ function aiPlay() {
     // the function found an empty space
     if (board.spaces[location[0]][location[1]] === null) {
         setTimeout(() => {  
-            console.log("success");
             place(board, location, "X");
             const space = document.getElementById("" + location[0].toString() + location[1].toString());
             space.innerText = "X";
@@ -170,7 +162,6 @@ function aiPlay() {
         return;
     // the function found a space already filled
      } else { 
-        console.log("fail");
         location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)]; 
         aiPlay();
     }
