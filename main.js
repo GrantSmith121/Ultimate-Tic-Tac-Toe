@@ -49,6 +49,8 @@ function place(grid, location, mark) {
     // return true;
     if (grid.winner != "") {
         console.log(grid.winner + " wins!");
+        let space = document.getElementById("" + location[0] + location[1]);
+        space.classList.toggle('hover-effect');
         
         for (let i = 0; i < indexValues.length; i++ ){
             let space = document.getElementById(indexValues[i]);
