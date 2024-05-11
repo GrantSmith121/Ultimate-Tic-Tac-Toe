@@ -45,18 +45,26 @@ function place(grid, location, mark) {
         aiPlay();
     } else { grid.turn = 1 }
 
+    let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
     // return true;
     if (grid.winner != "") {
         console.log(grid.winner + " wins!");
         
+        for (let i = 0; i < indexValues.length; i++ ){
+            let space = document.getElementById(indexValues[i]);
+            console.log(space);
+            if (space.innerText === "") {
+                space.classList.toggle('hover-effect');
+            }
+        }
     }
-    return true
+    return true;
 }
 
 gridElement.addEventListener('click', function(event) {
     if (event.target.classList.contains('space')) {
          const space = document.getElementById(event.target.getAttribute('id'));
-        if (space.innerText === "") {
+        if (space.innerText === "" && board.winner === "") {
             const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
             place(board, location, "O");
             space.innerText = "O";
