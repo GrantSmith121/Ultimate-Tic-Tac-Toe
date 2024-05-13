@@ -64,7 +64,7 @@ function place(grid, location, mark) {
 }
 
 gridElement.addEventListener('click', function(event) {
-    if (event.target.classList.contains('space')) {
+    if (event.target.classList.contains('space') && board.turn === 1) {
          const space = document.getElementById(event.target.getAttribute('id'));
         if (space.innerText === "" && board.winner === "") {
             const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
@@ -167,15 +167,6 @@ function anySpacesEmpty() {
             return true;
         }
     } return false;
-
-    // for (let i = 0; i < 9; i++) {
-    //     let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
-    //     let space = document.getElementById(indexValues[i]);
-
-    //     if (space.innerText === "") {
-    //         return true;
-    //     }
-    // } return false;
 }
 
 function aiPlay() {
