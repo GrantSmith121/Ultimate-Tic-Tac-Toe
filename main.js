@@ -154,6 +154,30 @@ function winCheck(grid, player) {
     };
 }
 
+function anySpacesEmpty() {
+
+    for (let i = 0; i < 2; i++) {
+        if (board.spaces[i][0] === null) {
+            return true;
+        }
+        if (board.spaces[i][1] === null) {
+            return true;
+        }
+        if (board.spaces[i][2] === null) {
+            return true;
+        }
+    } return false;
+
+    // for (let i = 0; i < 9; i++) {
+    //     let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
+    //     let space = document.getElementById(indexValues[i]);
+
+    //     if (space.innerText === "") {
+    //         return true;
+    //     }
+    // } return false;
+}
+
 function aiPlay() {
     if (board.winner != "") {
         return;
@@ -161,18 +185,25 @@ function aiPlay() {
 
     let location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)];
     // the function found an empty space
-    if (board.spaces[location[0]][location[1]] === null) {
-        setTimeout(() => {  
-            place(board, location, "X");
-            const space = document.getElementById("" + location[0].toString() + location[1].toString());
-            space.innerText = "X";
-            space.classList.toggle('hover-effect'); 
-        }, 1000);
 
+    if (anySpacesEmpty()) {
+        if (board.spaces[location[0]][location[1]] === null) {
+            setTimeout(() => {  
+                place(board, location, "X");
+                const space = document.getElementById("" + location[0].toString() + location[1].toString());
+                space.innerText = "X";
+                space.classList.toggle('hover-effect'); 
+            }, 1000);
+    
+            return;
+        // the function found a space already filled
+         } else { 
+            location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)]; 
+            aiPlay();
+        }
+    } else {
+        board.winner = "No one";
         return;
-    // the function found a space already filled
-     } else { 
-        location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)]; 
-        aiPlay();
     }
+    
 }
