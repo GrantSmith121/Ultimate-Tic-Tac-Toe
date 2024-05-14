@@ -1,9 +1,11 @@
 const gridElement = document.getElementById("grid");
+const playButton = document.getElementById("play-button");
 
 const board = {
     spaces: [[null, null, null], [null, null, null], [null, null, null]],
     turn: 1,
-    winner: ""
+    winner: "",
+    gameActive: false
 }
 
 let spacesBaseCase = [[null, null, null], [null, null, null], [null, null, null]];
@@ -15,6 +17,25 @@ let testSpaces3 = [[null, null, "X"], [null, "X", null], ["X", null, null]];
 // 0=continue 1=win 2=lose
 let winCondition = 0;
 
+function toggleAllSpaces() {
+    let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
+    for (let i = 0; i < indexValues.length; i++ ){
+        let space = document.getElementById(indexValues[i]);
+        if (space.innerText === "") {
+            space.classList.toggle('hover-effect');
+        }
+    }
+}
+
+toggleAllSpaces();
+
+playButton.addEventListener("click", function() {
+    // console.log(playButton.style.display);
+    playButton.style.display = "none";
+    board.gameActive = true;
+    toggleAllSpaces();
+})
+
 // location is an array
 // the first is row coordinate and the second value is column coordinate
 //location[2, 1]
@@ -25,7 +46,11 @@ function place(grid, location, mark) {
     if (grid.winner != "") {
         console.log(mark + " wins!");
         return;
-    }   
+    }
+
+    if (grid.gameActive === false) {
+        return;
+    }
 
     let rowNum = location[0];
     let columnNum = location[1];
@@ -45,26 +70,26 @@ function place(grid, location, mark) {
         aiPlay();
     } else { grid.turn = 1 }
 
-    let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
+    //let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
     // return true;
     if (grid.winner != "") {
         console.log(grid.winner + " wins!");
         let space = document.getElementById("" + location[0] + location[1]);
         space.classList.toggle('hover-effect');
         
-        for (let i = 0; i < indexValues.length; i++ ){
-            let space = document.getElementById(indexValues[i]);
-            console.log(space);
-            if (space.innerText === "") {
-                space.classList.toggle('hover-effect');
-            }
-        }
+        toggleAllSpaces();
+        // for (let i = 0; i < indexValues.length; i++ ){
+        //     let space = document.getElementById(indexValues[i]);
+        //     if (space.innerText === "") {
+        //         space.classList.toggle('hover-effect');
+        //     }
+        // }
     }
     return true;
 }
 
 gridElement.addEventListener('click', function(event) {
-    if (event.target.classList.contains('space') && board.turn === 1) {
+    if (event.target.classList.contains('space') && board.turn === 1 && board.gameActive === true) {
          const space = document.getElementById(event.target.getAttribute('id'));
         if (space.innerText === "" && board.winner === "") {
             const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];

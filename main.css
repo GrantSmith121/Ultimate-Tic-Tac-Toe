@@ -32,3 +32,20 @@ body {
     display: flex;
     justify-content: center;
 }
+
+button {
+    /* position: absolute; */
+    display: flex;
+    
+    /* top: 150px;
+    left: 200px; */
+}
+
+.button-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 430px;
+}
