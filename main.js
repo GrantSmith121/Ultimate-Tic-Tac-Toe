@@ -29,10 +29,22 @@ function toggleAllSpaces() {
 
 toggleAllSpaces();
 
+function emptyAllSpaces() {
+    let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
+    for (let i = 0; i < indexValues.length; i++ ){
+        let space = document.getElementById(indexValues[i]);
+        space.innerText = "";
+    }
+}
+
 playButton.addEventListener("click", function() {
     // console.log(playButton.style.display);
     playButton.style.display = "none";
     board.gameActive = true;
+    board.spaces = [[null, null, null], [null, null, null], [null, null, null]];
+    board.turn = 1;
+    board.winner = "";
+    emptyAllSpaces();
     toggleAllSpaces();
 })
 
@@ -161,12 +173,14 @@ function winCheck(grid, player) {
         rowCheck(grid.spaces[i]);
         if (rowCheck(grid.spaces[i])) {
             grid.winner = player;
+            playButton.style.display = "block";
             // console.log("Player 1 wins!");
             return;
         }
         columnCheck(grid.spaces, i);
         if (columnCheck(grid.spaces, i)) {
             grid.winner = player;
+            playButton.style.display = "block";
             // console.log("Player 1 wins!");
             return;
         }
@@ -174,6 +188,7 @@ function winCheck(grid, player) {
     diagonalCheck(grid.spaces);
     if (diagonalCheck(grid.spaces)) {
         grid.winner = player;
+        playButton.style.display = "block";
         // console.log("Player 1 wins!");
         return;
     };
