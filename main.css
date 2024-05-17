@@ -11,15 +11,20 @@ body {
     background-color: black;
 }
 
+.grid {
+    display: flex;
+    padding: 2em;
+}
+
 .space {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: black;
-    width: 150px;
-    height: 150px;
-    padding: 2em;
-    margin: 2em;
+    width: 20px;
+    height: 20px;
+    padding: 0.5em;
+    margin: 0.5em;
     color: white;
 }
 
