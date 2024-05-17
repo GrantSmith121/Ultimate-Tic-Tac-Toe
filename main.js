@@ -174,6 +174,7 @@ function winCheck(grid, player) {
         if (rowCheck(grid.spaces[i])) {
             grid.winner = player;
             playButton.style.display = "block";
+            playButton.textContent = "" + board.winner + " wins! Play again?";
             // console.log("Player 1 wins!");
             return;
         }
@@ -181,6 +182,7 @@ function winCheck(grid, player) {
         if (columnCheck(grid.spaces, i)) {
             grid.winner = player;
             playButton.style.display = "block";
+            playButton.textContent = "" + board.winner + " wins! Play again?";
             // console.log("Player 1 wins!");
             return;
         }
@@ -189,6 +191,7 @@ function winCheck(grid, player) {
     if (diagonalCheck(grid.spaces)) {
         grid.winner = player;
         playButton.style.display = "block";
+        playButton.textContent = "" + board.winner + " wins! Play again?";
         // console.log("Player 1 wins!");
         return;
     };
@@ -234,6 +237,8 @@ function aiPlay() {
         }
     } else {
         board.winner = "No one";
+        playButton.style.display = "block";
+        playButton.textContent = "" + board.winner + " wins! Play again?";
         return;
     }
     
