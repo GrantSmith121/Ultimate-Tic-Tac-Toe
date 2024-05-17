@@ -199,7 +199,7 @@ function winCheck(grid, player) {
 
 function anySpacesEmpty() {
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i <= 2; i++) {
         if (board.spaces[i][0] === null) {
             return true;
         }
