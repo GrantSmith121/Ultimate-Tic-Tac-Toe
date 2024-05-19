@@ -22,6 +22,7 @@ let newSpaceBaseCase = [[[null, null, null], [null, null, null], [null, null, nu
 let newTestSpaces1 = [["X", miniGrid, miniGrid], [miniGrid, "X", miniGrid], [miniGrid, miniGrid, "X"]];
 let newTestSpaces2 = [["X", miniGrid, miniGrid], ["X", miniGrid, miniGrid], ["X", miniGrid, miniGrid]];
 let newTestSpaces3 = [["X", "X", "X"], [miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid]];
+let newTestSpaces4 = [[[["X", "X", "X"], [null, null, null], [null, null, null]], miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid]]
 
 function toggleAllSpaces() {
     for (let i = 0; i < indexValues.length; i++ ){
@@ -171,27 +172,49 @@ function diagonalCheck(grid) {
 // player is either "X" or "O"
 function winCheck(grid, player) {
     for(let i = 0; i <= 2; i++) {
-        rowCheck(grid.spaces[i]);
-        if (rowCheck(grid.spaces[i])) {
-            grid.winner = player;
-            playButton.style.display = "block";
-            playButton.textContent = "" + board.winner + " wins! Play again?";
-            return;
+        rowCheck(grid[i]);
+        if (rowCheck(grid[i])) {
+            if (grid === board.spaces) {
+                board.winner = player;
+                playButton.style.display = "block";
+                playButton.textContent = "" + board.winner + " wins! Play again?";
+                return;
+            } else {
+                winCheck(board.spaces, player);
+            }
+            // grid.winner = player;
+            // playButton.style.display = "block";
+            // playButton.textContent = "" + board.winner + " wins! Play again?";
         }
-        columnCheck(grid.spaces, i);
-        if (columnCheck(grid.spaces, i)) {
-            grid.winner = player;
-            playButton.style.display = "block";
-            playButton.textContent = "" + board.winner + " wins! Play again?";
-            return;
+        columnCheck(grid, i);
+        if (columnCheck(grid, i)) {
+            if (grid === board.spaces) {
+                board.winner = player;
+                playButton.style.display = "block";
+                playButton.textContent = "" + board.winner + " wins! Play again?";
+                return;
+            } else {
+                winCheck(board.spaces, player);
+            }
+            // grid.winner = player;
+            // playButton.style.display = "block";
+            // playButton.textContent = "" + board.winner + " wins! Play again?";
         }
     };
-    diagonalCheck(grid.spaces);
-    if (diagonalCheck(grid.spaces)) {
-        grid.winner = player;
-        playButton.style.display = "block";
-        playButton.textContent = "" + board.winner + " wins! Play again?";
-        return;
+    diagonalCheck(grid);
+    if (diagonalCheck(grid)) {
+        if (grid === board.spaces) {
+            board.winner = player;
+            playButton.style.display = "block";
+            playButton.textContent = "" + board.winner + " wins! Play again?";
+            return;
+        } else {
+            winCheck(board.spaces, player);
+        }
+        // grid.winner = player;
+        // playButton.style.display = "block";
+        // playButton.textContent = "" + board.winner + " wins! Play again?";
+        
     };
 }
 
