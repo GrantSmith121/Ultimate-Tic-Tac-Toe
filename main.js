@@ -19,9 +19,9 @@ let testSpaces1 = [["X", null, null], ["X", null, null], ["O", null, null]];
 let testSpaces2 = [["X", null, null], [null, "X", null], [null, null, "X"]];
 let testSpaces3 = [[null, null, "X"], [null, "X", null], ["X", null, null]];
 let newSpaceBaseCase = [[[null, null, null], [null, null, null], [null, null, null]], [[null, null, null], [null, null, null], [null, null, null]], [[null, null, null], [null, null, null], [null, null, null]]];
-
-// 0=continue 1=win 2=lose
-let winCondition = 0;
+let newTestSpaces1 = [["X", miniGrid, miniGrid], [miniGrid, "X", miniGrid], [miniGrid, miniGrid, "X"]];
+let newTestSpaces2 = [["X", miniGrid, miniGrid], ["X", miniGrid, miniGrid], ["X", miniGrid, miniGrid]];
+let newTestSpaces3 = [["X", "X", "X"], [miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid]];
 
 function toggleAllSpaces() {
     for (let i = 0; i < indexValues.length; i++ ){
@@ -86,8 +86,6 @@ function place(grid, location, mark) {
         aiPlay();
     } else { grid.turn = 1 }
 
-    //let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
-    // return true;
     if (grid.winner != "") {
         console.log(grid.winner + " wins!");
         let space = document.getElementById("" + location[0] + location[1]);
@@ -110,8 +108,14 @@ gridElement.addEventListener('click', function(event) {
     }
 });
 
+function isString(variable) {
+    if (typeof variable === "string" || variable instanceof String) {
+        return true;
+    } else return false;
+}
+
 function rowCheck(row) {
-    if (row[0] === null || row[1] === null || row[2] === null) {
+    if (isString(row[0]) === false || isString(row[1]) === false || isString(row[2]) === false) {
         return false;
     }
     if (row[0] != row[1]) {
@@ -125,7 +129,7 @@ function rowCheck(row) {
 
 // grid is the set of all given spaces and index is which column you want to check
 function columnCheck(grid, index) {
-    if ((grid[0])[index] === null || (grid[0])[index] === null || (grid[0])[index] === null) {
+    if (isString((grid[0])[index]) === false || isString((grid[0])[index]) === false || isString((grid[0])[index]) === false) {
         return false;
     }
 
@@ -138,12 +142,11 @@ function columnCheck(grid, index) {
     else return true;
 }
 
-// leftToRight is a boolean to check if you are going diagonal from left to right or right to left
 function diagonalCheck(grid) {
-    if ((grid[1])[1] === null || ((grid[0])[0] === null && (grid[0])[2] === null) || ((grid[2])[0] === null && (grid[2])[2] === null)) {
+    if (isString((grid[1])[1]) === false || (isString((grid[0])[0]) === false && isString((grid[0])[2]) === false) || (isString((grid[2])[0]) === false && isString((grid[2])[2]) === false)) {
         return false;
     }
-    if (((grid[0])[0] === null && (grid[2])[0] === null) || ((grid[0])[2] === null && (grid[2])[2] === null)) {
+    if ((isString((grid[0])[0]) === false && isString((grid[2])[0]) === false) || (isString((grid[0])[2]) === false && isString((grid[2])[2]) === false)) {
         return false;
     }
     if(((grid[1])[1] != (grid[0])[0]) && ((grid[1])[1] != (grid[0])[2])) {
@@ -173,7 +176,6 @@ function winCheck(grid, player) {
             grid.winner = player;
             playButton.style.display = "block";
             playButton.textContent = "" + board.winner + " wins! Play again?";
-            // console.log("Player 1 wins!");
             return;
         }
         columnCheck(grid.spaces, i);
@@ -181,7 +183,6 @@ function winCheck(grid, player) {
             grid.winner = player;
             playButton.style.display = "block";
             playButton.textContent = "" + board.winner + " wins! Play again?";
-            // console.log("Player 1 wins!");
             return;
         }
     };
@@ -190,27 +191,26 @@ function winCheck(grid, player) {
         grid.winner = player;
         playButton.style.display = "block";
         playButton.textContent = "" + board.winner + " wins! Play again?";
-        // console.log("Player 1 wins!");
         return;
     };
 }
 
-function anySpacesEmpty() {
+function anySpacesEmpty(grid) {
 
     for (let i = 0; i <= 2; i++) {
-        if (board.spaces[i][0] === null) {
+        if (grid.spaces[i][0] === null) {
             return true;
         }
-        if (board.spaces[i][1] === null) {
+        if (grid.spaces[i][1] === null) {
             return true;
         }
-        if (board.spaces[i][2] === null) {
+        if (grid.spaces[i][2] === null) {
             return true;
         }
     } return false;
 }
 
-function aiPlay() {
+function aiPlay(grid) {
     if (board.winner != "") {
         return;
     }
@@ -218,10 +218,10 @@ function aiPlay() {
     let location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)];
     // the function found an empty space
 
-    if (anySpacesEmpty()) {
-        if (board.spaces[location[0]][location[1]] === null) {
+    if (anySpacesEmpty(grid)) {
+        if (grid.spaces[location[0]][location[1]] === null) {
             setTimeout(() => {  
-                place(board, location, "X");
+                place(grid, location, "X");
                 const space = document.getElementById("" + location[0].toString() + location[1].toString());
                 space.innerText = "X";
                 space.classList.toggle('hover-effect'); 
@@ -231,7 +231,7 @@ function aiPlay() {
         // the function found a space already filled
          } else { 
             location = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)]; 
-            aiPlay();
+            aiPlay(grid);
         }
     } else {
         board.winner = "No one";
