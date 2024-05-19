@@ -1,8 +1,13 @@
 const gridElement = document.getElementById("grid");
 const playButton = document.getElementById("play-button");
 
+const indexValues = ["00-00","00-02","00-01","00-10","00-11","00-12","00-20","00-21","00-22","01-00","01-01","01-02","01-10","01-11","01-12","01-20","01-21","01-22","02-00","02-01","02-02","02-10","02-11","02-12","02-20","02-21","02-22","10-00","10-01","10-02","10-10","10-11","10-12","10-20","10-21","10-22","11-00","11-01","11-02","11-10","11-11","11-12","11-20","11-21","11-22","12-00","12-01","12-02","12-10","12-11","12-12","12-20","12-21","12-22","20-00","20-01","20-02","20-10","20-11","20-12","20-20","20-21","20-22","21-00","21-01","21-02","21-10","21-11","21-12","21-20","21-21","21-22","22-00","22-01","22-02","22-10","22-11","22-12","22-20","22-21","22-22"]
+
+const miniGrid = [[null, null, null], [null, null, null], [null, null, null]];
+const largeGrid = [[miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid]];
+
 const board = {
-    spaces: [[null, null, null], [null, null, null], [null, null, null]],
+    spaces: [[miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid]],
     turn: 1,
     winner: "",
     gameActive: false
@@ -19,7 +24,6 @@ let newSpaceBaseCase = [[[null, null, null], [null, null, null], [null, null, nu
 let winCondition = 0;
 
 function toggleAllSpaces() {
-    let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
     for (let i = 0; i < indexValues.length; i++ ){
         let space = document.getElementById(indexValues[i]);
         if (space.innerText === "") {
@@ -31,7 +35,6 @@ function toggleAllSpaces() {
 toggleAllSpaces();
 
 function emptyAllSpaces() {
-    let indexValues = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
     for (let i = 0; i < indexValues.length; i++ ){
         let space = document.getElementById(indexValues[i]);
         space.innerText = "";
@@ -91,12 +94,6 @@ function place(grid, location, mark) {
         space.classList.toggle('hover-effect');
         
         toggleAllSpaces();
-        // for (let i = 0; i < indexValues.length; i++ ){
-        //     let space = document.getElementById(indexValues[i]);
-        //     if (space.innerText === "") {
-        //         space.classList.toggle('hover-effect');
-        //     }
-        // }
     }
     return true;
 }
