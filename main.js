@@ -10,7 +10,8 @@ const board = {
     spaces: [[miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid]],
     turn: 1,
     winner: "",
-    gameActive: false
+    gameActive: false,
+    activeGrid: null
 }
 
 let spacesBaseCase = [[null, null, null], [null, null, null], [null, null, null]];
@@ -22,7 +23,7 @@ let newSpaceBaseCase = [[[null, null, null], [null, null, null], [null, null, nu
 let newTestSpaces1 = [["X", miniGrid, miniGrid], [miniGrid, "X", miniGrid], [miniGrid, miniGrid, "X"]];
 let newTestSpaces2 = [["X", miniGrid, miniGrid], ["X", miniGrid, miniGrid], ["X", miniGrid, miniGrid]];
 let newTestSpaces3 = [["X", "X", "X"], [miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid]];
-let newTestSpaces4 = [[[["X", "X", "X"], [null, null, null], [null, null, null]], miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid]]
+let newTestSpaces4 = [[[["X", "X", "X"], [null, null, null], [null, null, null]], miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid], [miniGrid, miniGrid, miniGrid]];
 
 function toggleAllSpaces() {
     for (let i = 0; i < indexValues.length; i++ ){
@@ -46,9 +47,10 @@ playButton.addEventListener("click", function() {
     // console.log(playButton.style.display);
     playButton.style.display = "none";
     board.gameActive = true;
-    board.spaces = [[null, null, null], [null, null, null], [null, null, null]];
+    board.spaces = largeGrid;
     board.turn = 1;
     board.winner = "";
+    board.activeGrid = null;
     emptyAllSpaces();
     toggleAllSpaces();
 })
@@ -60,19 +62,26 @@ playButton.addEventListener("click", function() {
 // function to place either X or O in a specific space
 function place(grid, location, mark) {
 
-    if (grid.winner != "") {
+    if (board.winner != "") {
         console.log(mark + " wins!");
         return;
     }
 
-    if (grid.gameActive === false) {
+    if (board.gameActive === false) {
         return;
     }
+
+    let bigGridRowNum = Number(board.activeGrid.substr(0, 1));
+    let bigGridColumnNum = Number(board.activeGrid.substr(1, 1));
+
+    let bigGridRow = board.spaces[bigGridRowNum];
+    let bigGridColumn = bigGridRow[bigGridColumnNum];
+
 
     let rowNum = location[0];
     let columnNum = location[1];
 
-    let row = grid.spaces[rowNum];
+    let row = bigGridColumn[rowNum];
 
     row[columnNum] = mark;
     console.log(row[columnNum]);
@@ -82,12 +91,12 @@ function place(grid, location, mark) {
 
 
 
-    if (grid.turn === 1) {
-        grid.turn = 2;
+    if (board.turn === 1) {
+        board.turn = 2;
         aiPlay();
-    } else { grid.turn = 1 }
+    } else { board.turn = 1 }
 
-    if (grid.winner != "") {
+    if (board.winner != "") {
         console.log(grid.winner + " wins!");
         let space = document.getElementById("" + location[0] + location[1]);
         space.classList.toggle('hover-effect');
@@ -100,9 +109,14 @@ function place(grid, location, mark) {
 gridElement.addEventListener('click', function(event) {
     if (event.target.classList.contains('space') && board.turn === 1 && board.gameActive === true) {
          const space = document.getElementById(event.target.getAttribute('id'));
+         console.log(space);
         if (space.innerText === "" && board.winner === "") {
-            const location = [Number((event.target.getAttribute('id')).substr(0, 1)), Number((event.target.getAttribute('id')).substr(1, 2))];
-            place(board, location, "O");
+            const location = [Number((event.target.getAttribute('id')).substr(3, 4)), Number((event.target.getAttribute('id')).substr(4, 5))];
+            if (board.activeGrid === null) {
+                // const tempActiveGrid = [Number(event.target.getAttribute('id').substr(0, 1)) + " " + Number(event.target.getAttribute('id').substr(1, 1))];
+                board.activeGrid = event.target.getAttribute('id').substr(0, 1) + "" + event.target.getAttribute('id').substr(1, 1);                
+                place(board, location, "O");
+            }
             space.innerText = "O";
             space.classList.toggle('hover-effect');
         }
