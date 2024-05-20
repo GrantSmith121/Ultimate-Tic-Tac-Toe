@@ -109,13 +109,13 @@ function place(grid, location, mark) {
 gridElement.addEventListener('click', function(event) {
     if (event.target.classList.contains('space') && board.turn === 1 && board.gameActive === true) {
          const space = document.getElementById(event.target.getAttribute('id'));
-         console.log(space);
+        //  console.log(space);
         if (space.innerText === "" && board.winner === "") {
             const location = [Number((event.target.getAttribute('id')).substr(3, 4)), Number((event.target.getAttribute('id')).substr(4, 5))];
             if (board.activeGrid === null) {
                 // const tempActiveGrid = [Number(event.target.getAttribute('id').substr(0, 1)) + " " + Number(event.target.getAttribute('id').substr(1, 1))];
                 board.activeGrid = event.target.getAttribute('id').substr(0, 1) + "" + event.target.getAttribute('id').substr(1, 1);                
-                place(board, location, "O");
+                place(board.activeGrid, location, "O");
             }
             space.innerText = "O";
             space.classList.toggle('hover-effect');
