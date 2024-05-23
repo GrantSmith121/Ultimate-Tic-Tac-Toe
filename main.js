@@ -110,11 +110,16 @@ gridElement.addEventListener('click', function(event) {
             if (board.activeGrid === null) {
                 board.activeGrid = event.target.getAttribute('id').substr(3, 2);                
                 place(board.activeGrid, location, "O");
+                space.innerText = "O";
+                space.classList.toggle('hover-effect');
             } else {
-                place(board.activeGrid, location, "O");
+                if ((event.target.getAttribute("id").substr(0, 1) + event.target.getAttribute("id").substr(1, 1)) === (board.activeGrid.substr(0,1) + board.activeGrid.substr(1, 1))) {
+                    place(board.activeGrid, location, "O");
+                    space.innerText = "O";
+                    space.classList.toggle('hover-effect');
+                } 
             }
-            space.innerText = "O";
-            space.classList.toggle('hover-effect');
+            
         }
     }
 });
