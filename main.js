@@ -177,7 +177,7 @@ function anySpacesEmpty(grid) {
     return false;
 }
 
-function aiPlay(grid) {
+function aiPlay() {
     if (board.winner !== "") {
         return;
     }
@@ -186,6 +186,8 @@ function aiPlay(grid) {
     let miniGrid = board.spaces[Number(board.activeGrid[0])][Number(board.activeGrid[1])];
 
     if (anySpacesEmpty(miniGrid)) {
+        console.log("spaces empty");
+        console.log(location[0] + " " + location[1] + " " + miniGrid[location[0]][location[1]]);
         if (miniGrid[location[0]][location[1]] === null) {
             setTimeout(() => {  
                 place(board.activeGrid, location, "X");
@@ -194,5 +196,6 @@ function aiPlay(grid) {
                 space.classList.toggle('hover-effect'); 
             }, 1000);
             return;
-        }
-    }}
+        } else { aiPlay(); }
+    }
+}
