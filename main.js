@@ -39,6 +39,28 @@ function emptyAllSpaces() {
     }
 }
 
+function updateGridState() {
+    for (let i = 0; i < indexValues.length; i++) {
+        let spaceId = indexValues[i];
+        let gridId = spaceId.substring(0, 2);
+        let space = document.getElementById(spaceId);
+        
+        if (gridId !== board.activeGrid) {
+            if (space.classList.contains('hover-effect')) {
+                space.classList.toggle('hover-effect');
+                if (space.innerText === "") {
+                    space.style.opacity = 0.5;
+                }
+            }
+        } else {
+            if (space.innerText === "") {
+                space.classList.add('hover-effect');
+                space.style.opacity = 1.0;
+            }
+        }
+    }
+}
+
 playButton.addEventListener("click", function() {
     playButton.style.display = "none";
     board.gameActive = true;
@@ -48,6 +70,7 @@ playButton.addEventListener("click", function() {
     board.activeGrid = null;
     emptyAllSpaces();
     toggleAllSpaces();
+    // updateGridState();
 })
 
 // function to place either X or O in a specific space
@@ -98,26 +121,31 @@ function place(grid, location, mark) {
  
     setTimeout(() => {  
         board.activeGrid = "" + location[0] + location[1];
-        for (let i = 0; i < indexValues.length; i++) {
-            // console.log(board.activeGrid);
-            let spaceId = indexValues[i];
-            let gridId = spaceId.substring(0, 2);
-            // console.log(gridId);
-            let space = document.getElementById(spaceId);
+        console.log(board.activeGrid);
+        updateGridState();
+        // for (let i = 0; i < indexValues.length; i++) {
+        //     // console.log(board.activeGrid);
+        //     let spaceId = indexValues[i];
+        //     let gridId = spaceId.substring(0, 2);
+        //     // console.log(gridId);
+        //     let space = document.getElementById(spaceId);
           
-            if (gridId !== board.activeGrid) {
-                console.log(space);
-                if (space.classList.contains('hover-effect')) {
-                    space.classList.toggle('hover-effect');
-                    space.style.opacity = .5;
-                }
-            } else { 
-                if (space.innerText === "") {
-                    space.classList.toggle('hover-effect');
-                    // space.classList[0].style.backgroundColor = "black";
-                    space.style.opacity = 1.0;
-                } }
-        }
+        //     if (gridId !== board.activeGrid) {
+        //         // console.log(space);
+        //         if (space.classList.contains('hover-effect')) {
+        //             space.classList.toggle('hover-effect');
+        //             if (space.innerText === "") {
+        //                 space.style.opacity = .5;
+        //             }
+        //         }
+        //     } else { 
+        //         if (space.innerText === "") {
+        //             space.classList.toggle('hover-effect');
+        //             // space.classList[0].style.backgroundColor = "black";
+        //             space.style.opacity = 1.0;
+        //             console.log(space);
+        //         } }
+        // }
     }, 1);
 
 
@@ -223,6 +251,7 @@ function aiPlay() {
                 const space = document.getElementById("" + board.activeGrid.substr(0, 1) + board.activeGrid.substr(1, 1) + "-" + location[0] + location[1]);
                 space.innerText = "X";
                 space.classList.toggle('hover-effect'); 
+                updateGridState();
             }, 1000);
             return;
         } else { aiPlay(); }
