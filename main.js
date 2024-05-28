@@ -212,16 +212,28 @@ function diagonalCheck(grid) {
 function winCheck(grid, player) {
     for (let i = 0; i <= 2; i++) {
         if (rowCheck(grid[i]) || columnCheck(grid, i)) {
-            board.winner = player;
-            playButton.style.display = "block";
-            playButton.textContent = `${board.winner} wins! Play again?`;
-            return;
+            if (grid === board.spaces) {
+                board.winner = player;
+                playButton.style.display = "block";
+                playButton.textContent = `${board.winner} wins! Play again?`;
+                return;
+            } else {
+                grid = player;
+                winCheck(board.spaces, player);
+            }
+
         }
     }
     if (diagonalCheck(grid)) {
-        board.winner = player;
-        playButton.style.display = "block";
-        playButton.textContent = `${board.winner} wins! Play again?`;
+        if (grid === board.spaces) {
+            board.winner = player;
+            playButton.style.display = "block";
+            playButton.textContent = `${board.winner} wins! Play again?`;
+        } else {
+            grid = player;
+            winCheck(board.spaces, player);
+        }
+        
     }
 }
 
